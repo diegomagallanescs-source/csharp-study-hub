@@ -416,9 +416,9 @@ public class ShoppingCart
         {
             Product p = _products[id];
             int qty = _quantities[id];
-            Console.WriteLine($"{p.Name} x{qty} @ ${p.Price:F2} = ${p.Price * qty:F2}");
+            Console.WriteLine($"{p.Name} x{qty} @ \${p.Price:F2} = \${p.Price * qty:F2}");
         }
-        Console.WriteLine($"Total: ${GetTotal():F2}");
+        Console.WriteLine($"Total: \${GetTotal():F2}");
     }
 }
 
@@ -683,7 +683,7 @@ public class Bank
         if (success)
         {
             await to.DepositAsync(amount);
-            Console.WriteLine($"Transferred ${amount} from {fromId} to {toId}");
+            Console.WriteLine($"Transferred \${amount} from {fromId} to {toId}");
         }
         else
             Console.WriteLine($"Transfer failed — insufficient funds");
@@ -1911,7 +1911,7 @@ public class PhysicalProduct : IProduct
     }
 
     public string GetDetails() =>
-        $"Physical: {Name} | ${Price} | {WeightKg}kg @ {WarehouseLocation}";
+        $"Physical: {Name} | \${Price} | {WeightKg}kg @ {WarehouseLocation}";
 }
 
 public class DigitalProduct : IProduct
@@ -1929,7 +1929,7 @@ public class DigitalProduct : IProduct
     }
 
     public string GetDetails() =>
-        $"Digital: {Name} | ${Price} | {FileSizeBytes / 1024}KB @ {DownloadUrl}";
+        $"Digital: {Name} | \${Price} | {FileSizeBytes / 1024}KB @ {DownloadUrl}";
 }
 
 public class Inventory
@@ -2390,7 +2390,7 @@ public abstract class Employee
     public abstract decimal CalculatePay();
 
     public virtual string GetSummary() =>
-        $"[{EmployeeId}] {Name} — Monthly Pay: ${CalculatePay():F2}";
+        $"[{EmployeeId}] {Name} — Monthly Pay: \${CalculatePay():F2}";
 }
 
 public class FullTimeEmployee : Employee
@@ -2406,7 +2406,7 @@ public class FullTimeEmployee : Employee
     public decimal GetMonthlyBonus() => CalculatePay() * AnnualBonusRate;
 
     public override string GetSummary() =>
-        $"{base.GetSummary()} | Bonus: ${GetMonthlyBonus():F2} | Type: Full-Time";
+        $"{base.GetSummary()} | Bonus: \${GetMonthlyBonus():F2} | Type: Full-Time";
 }
 
 public class PartTimeEmployee : Employee
@@ -2424,7 +2424,7 @@ public class PartTimeEmployee : Employee
     public override decimal CalculatePay() => _hourlyRate * _hoursThisMonth;
 
     public override string GetSummary() =>
-        $"{base.GetSummary()} | {_hoursThisMonth}hrs @ ${_hourlyRate}/hr | Type: Part-Time";
+        $"{base.GetSummary()} | {_hoursThisMonth}hrs @ \${_hourlyRate}/hr | Type: Part-Time";
 }
 
 public class PayrollProcessor
@@ -2453,7 +2453,7 @@ public class PayrollProcessor
     {
         Console.WriteLine("=== Payroll Report ===");
         foreach (Employee e in _employees) Console.WriteLine(e.GetSummary());
-        Console.WriteLine($"Total: ${GetTotalPayroll():F2}");
+        Console.WriteLine($"Total: \${GetTotalPayroll():F2}");
     }
 }
 
@@ -2943,7 +2943,7 @@ public class PricingStep : ICheckoutStep
             if (_prices.TryGetValue(item.Key, out decimal price))
                 total += price * item.Value;
         order.Total = total;
-        order.ProcessingLog.Add($"Total calculated: ${total:F2}");
+        order.ProcessingLog.Add($"Total calculated: \${total:F2}");
         return Task.FromResult(true);
     }
 }
@@ -2955,7 +2955,7 @@ public class PaymentStep : ICheckoutStep
     public async Task<bool> ProcessAsync(Order order)
     {
         await Task.Delay(100); // simulate payment API
-        order.ProcessingLog.Add($"Payment of ${order.Total:F2} authorized");
+        order.ProcessingLog.Add($"Payment of \${order.Total:F2} authorized");
         return true;
     }
 }
