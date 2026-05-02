@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>C# Study Hub</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="header-brand">
+        <span class="header-logo">C#</span>
+        <div>
+          <h1 class="header-title">Study Hub</h1>
+          <p class="header-sub">25 hands-on C# practice problems</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <div class="progress-pill" id="progress-pill">
+          <span id="progress-label">Ready</span>
+        </div>
+        <button class="btn btn-primary" id="btn-random">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg>
+          Random Question
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN LAYOUT -->
+  <main class="main-layout">
+
+    <!-- LEFT: QUESTION PANEL -->
+    <aside class="question-panel" id="question-panel">
+
+      <!-- Placeholder -->
+      <div class="placeholder-state" id="placeholder-state">
+        <div class="placeholder-icon">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <h3>Pick a Question</h3>
+        <p>Click <strong>Random Question</strong> to get started, or browse by number below.</p>
+        <div class="question-grid" id="question-grid"></div>
+      </div>
+
+      <!-- Active Question -->
+      <div class="question-content hidden" id="question-content">
+        <div class="question-header-bar">
+          <div class="question-meta-row">
+            <span class="q-number" id="q-number">Q1</span>
+            <span class="difficulty-badge" id="q-difficulty">Beginner</span>
+            <button class="btn-icon btn-browse" id="btn-browse" title="Browse all questions">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+              Browse
+            </button>
+          </div>
+          <h2 class="q-title" id="q-title">Question Title</h2>
+          <div class="tag-row" id="q-tags"></div>
+        </div>
+
+        <div class="question-body" id="q-description"></div>
+
+        <details class="hint-block" id="hint-details">
+          <summary>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Hint
+          </summary>
+          <p class="hint-text" id="q-hint"></p>
+        </details>
+
+        <!-- Question Nav -->
+        <div class="q-nav">
+          <button class="btn btn-ghost btn-sm" id="btn-prev">← Prev</button>
+          <button class="btn btn-ghost btn-sm" id="btn-next">Next →</button>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- RIGHT: EDITOR PANEL -->
+    <section class="editor-panel">
+
+      <!-- Toolbar -->
+      <div class="editor-toolbar">
+        <div class="toolbar-left">
+          <span class="lang-badge">C#</span>
+          <button class="btn btn-ghost btn-sm" id="btn-reset" title="Reset to starter code">Reset</button>
+          <button class="btn btn-ghost btn-sm" id="btn-copy">Copy</button>
+          <a class="btn btn-ghost btn-sm" href="https://dotnetfiddle.net" target="_blank" rel="noopener">Run on .NET Fiddle ↗</a>
+        </div>
+        <div class="toolbar-right">
+          <button class="btn btn-answer" id="btn-show-answer">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            Show Answer
+          </button>
+        </div>
+      </div>
+
+      <!-- Monaco Editor -->
+      <div class="editor-wrap">
+        <div id="editor-container"></div>
+      </div>
+
+      <!-- Answer Panel -->
+      <div class="answer-panel hidden" id="answer-panel">
+        <div class="answer-header">
+          <div class="answer-header-left">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4ec9b0" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Sample Answer</span>
+          </div>
+          <div class="answer-header-right">
+            <button class="btn btn-ghost btn-sm" id="btn-copy-answer">Copy Answer</button>
+            <button class="btn-icon" id="btn-close-answer" title="Hide answer">✕</button>
+          </div>
+        </div>
+        <div id="answer-editor-container"></div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- BROWSE MODAL -->
+  <div class="modal-overlay hidden" id="modal-overlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>All Questions</h3>
+        <button class="btn-icon" id="modal-close">✕</button>
+      </div>
+      <div class="modal-body" id="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast hidden" id="toast"></div>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/monaco-editor@0.45.0/min/vs/loader.js"></script>
+  <script src="questions.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
